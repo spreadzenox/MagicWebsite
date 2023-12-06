@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Paquet;
+use App\Entity\User;
+use App\Entity\Carte;
+use App\Repository\CarteRepository;
+use App\Repository\UserRepository;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Validator\Constraints\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
+class PaquetType extends AbstractType
+{
+    private $crepo;
+    public function __construct(private Security $security,CarteRepository $crepo, UserRepository $urepo) {
+        $this->crepo = $crepo;
+        $this->urepo = $urepo;
+    }
+    
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $urepo=$this->urepo;
+        $crepo=$this->crepo;
+        $user = $this->security->getUser();
+        foreach ($urepo as $u){
+            
+        }
+        if (!$user) {
+            throw new \LogicException(
+                'The edit form cannot be used without an authenticated user!'
+                );
+        }
+        $builder
+            ->add('description')
+            ->add('publique')
+            ->add('user', EntityType::class, [
+                'class' => User::class,
+                'placeholder' => '',
+                'choices' => [$user],
+                'multiple' => false,
+                'by_reference' => false
+            ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user,$repo): void {
+                $form = $event->getForm();
+                $cartes= new ArrayCollection();
+                foreach ($crepo->findAll() as $carte){
+                    if (in_array($carte , $user->getCartes()->toArray())) {
+                        $cartes->add($carte);
+
+                    }
+                }
+                $form->add('items', EntityType::class, [
+                    'class' => Carte::class,
+                    'placeholder' => '',
+                    'choices' => $cartes,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'by_reference' => false
+                ]);
+
+            })
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Paquet::class,
+        ]);
+    }
+}

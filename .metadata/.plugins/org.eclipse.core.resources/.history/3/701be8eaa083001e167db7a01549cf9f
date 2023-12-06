@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Carte;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+class CarteType extends AbstractType
+{
+    public function __construct(private Security $security) {
+    }
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $user=$this->security->getUser();
+        $builder
+            ->add('Nom')
+            ->add('paquet')
+            ->add('Attaque')
+            ->add('defense')
+            ->add('pouvoir')
+            ->add('user', EntityType::class, [
+                'class' => User::class,
+                'placeholder' => '',
+                'choices' => [$user],
+                'multiple' => false,
+                'by_reference' => false
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Carte::class,
+        ]);
+    }
+}

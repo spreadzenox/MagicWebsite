@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Carte;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Repository\PaquetRepository;
+
+class CarteType extends AbstractType
+{
+    private $repo;
+    public function __construct(private Security $security,PaquetRepository $repo) {
+        $this->repo = $repo;
+    }
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $user=$this->security->getUser();
+        $builder
+            ->add('Nom')
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user,$repo): void {
+                $form = $event->getForm();
+                $cartes= new ArrayCollection();
+                foreach ($repo->findAll() as $carte){
+                    if (in_array($carte , $user->getCartes()->toArray())) {
+                        $cartes->add($carte);
+                        
+                    }
+                }
+                $form->add('items', EntityType::class, [
+                    'class' => Carte::class,
+                    'placeholder' => '',
+                    'choices' => $cartes,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'by_reference' => false
+                ])
+            ->add('Attaque')
+            ->add('defense')
+            ->add('pouvoir')
+            ->add('proprietaire', EntityType::class, [
+                'class' => User::class,
+                'placeholder' => '',
+                'choices' => [$user],
+                'multiple' => false,
+                'by_reference' => false
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Carte::class,
+        ]);
+    }
+}

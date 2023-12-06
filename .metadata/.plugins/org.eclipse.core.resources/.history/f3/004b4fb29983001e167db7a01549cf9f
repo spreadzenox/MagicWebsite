@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue{% endblock %}
+
+{% block body %}
+<main>
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #banner,
+        #features {
+            width: 70%;
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+<section id="banner">
+    <h1>
+       Galerie pour fan de cartes Magic
+    </h1>
+    <p>
+       Bienvenue sur ce site web ! <br>
+       Ce site est destiné à tous les fan de cartes magic pour mettre en ligne vos meilleurs paquets afin de gagner tous les tournois.<br>
+       Si vous jouez les cartes blanches vous serez cependant bannis à vie de ce site je préfère prévenir (grâce à ma superbe interface admin)
+    </p>
+</section>
+ 
+<section id="features" >
+    <div>
+        <h3>Enregistrez vous !</h3>
+                <img src="./register.jpg" width="1000" 
+     height="400"/>  
+       <p>
+       Pour profiter pleinement de toutes les fonctionnalités exclusives de notre site, nous vous invitons à vous inscrire dès maintenant. En tant que membre, vous aurez accès à des fonctionnalités passionnantes, telles que la création et la consultation de vos paquets de cartes uniques, la participation à des tournois exclusifs, et bien plus encore !<br>
+<br>
+Pourquoi vous inscrire ?
+<br>
+Créez vos Paquets Uniques : Concevez et partagez vos stratégies de jeu en créant vos propres paquets de cartes Magic.<br>
+Explorez la Galerie des Cartes : Découvrez les créations époustouflantes des autres membres de la communauté et trouvez l'inspiration pour vos propres decks.<br>
+Rejoignez-nous dès aujourd'hui et plongez dans l'univers fascinant de Magic !<br>
+<br>
+Inscrivez-vous maintenant !<br>
+<br>
+Nous sommes impatients de vous accueillir dans notre communauté de joueurs passionnés.<br>
+<br>
+À bientôt sur le champ de bataille !
+       </p>
+    </div>
+    <div>
+        <h3>Vos paquets !</h3>
+		<img src="./galerie_carte.png" width="1000" 
+     height="400"/>
+        <p>
+        </p>
+     </div>
+</section>
+</main>
+
+{% endblock %}

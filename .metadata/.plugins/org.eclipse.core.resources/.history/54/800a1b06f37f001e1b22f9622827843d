@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\CarteRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use PhpParser\Node\Stmt\Foreach_;
+
+#[ORM\Entity(repositoryClass: CarteRepository::class)]
+class Carte
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Nom = null;
+
+    #[ORM\ManyToMany(targetEntity: Paquet::class, inversedBy: 'items')]
+    private Collection $paquet;
+    #private ?Paquet $paquet = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->Nom;
+    }
+    
+    public function __toString() : string
+    {
+        return $this->Nom;
+    }
+
+    public function setNom(string $Nom): static
+    {
+        $this->Nom = $Nom;
+
+        return $this;
+    }
+
+    public function getPaquet(): ?Paquet
+    {   
+        return $this->paquet;
+        
+    }
+
+    public function setPaquet(?Paquet $paquet): static
+    {
+        $this->paquet = $paquet;
+
+        return $this;
+    }
+    
+}

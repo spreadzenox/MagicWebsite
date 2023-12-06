@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paquet index{% endblock %}
+
+{% block body %}
+    <h1>Galerie publiées par les autres</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Cartes</th>
+                <th>Propriétaire</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for paquet in paquets %}
+        	{% if paquet.publique or is_granted('ROLE_ADMIN')  %}
+            <tr>
+                <td>{{ paquet.id }}</td>
+                <td>{{ paquet.description }}</td>
+                <td>{% for carte in paquet.items %}<a href="{{ path('app_carte_show', {'id': carte.id}) }}">{{ carte.Nom }} </a> {% endfor %}</td>
+                <td><a href="{{ path('app_user_show', {'id': paquet.user.id}) }}">{{ paquet.user.pseudo }}</a></td>
+                <td>
+                    <a href="{{ path('app_paquet_show', {'id': paquet.id}) }}">show</a>
+                    {% if is_granted('ROLE_ADMIN')  %}
+                    <a href="{{ path('app_paquet_edit', {'id': paquet.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

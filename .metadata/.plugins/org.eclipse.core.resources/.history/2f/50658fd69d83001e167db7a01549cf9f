@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<h1>Vos cartes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Attaque</th>
+                <th>Défense</th>
+                <th>Pouvoir</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for carte in app.user.cartes %}
+            <tr>
+                <td>{{ carte.id }}</td>
+                <td>{{ carte.Nom }}</td>
+                <td>{% for carte in paquet.items %}
+                {{ carte.Nom }} 
+                {% endfor %}</td>
+                <td>{% if paquet.publique %}
+                    	Oui
+                    {% else %}
+                    	Non
+                </td>
+                {% endif %}
+                <td>
+                    <a href="{{ path('app_paquet_show', {'id': paquet.id}) }}">Voir</a>
+                    <a href="{{ path('app_paquet_edit', {'id': paquet.id}) }}">Editer</a>
+                </td>
+            </tr>
+        {% else %}            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+    <h1>Vos paquets</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Cartes</th>
+                <th>Publique</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for paquet in app.user.paquets %}
+            <tr>
+                <td>{{ paquet.id }}</td>
+                <td>{{ paquet.description }}</td>
+                <td>{% for carte in paquet.items %}
+                {{ carte.Nom }} 
+                {% endfor %}</td>
+                <td>{% if paquet.publique %}
+                    	Oui
+                    {% else %}
+                    	Non
+                </td>
+                {% endif %}
+                <td>
+                    <a href="{{ path('app_paquet_show', {'id': paquet.id}) }}">Voir</a>
+                    <a href="{{ path('app_paquet_edit', {'id': paquet.id}) }}">Editer</a>
+                </td>
+            </tr>
+        {% else %}            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <h1>Votre compte</h1>
+
+{{ include('user/_form.html.twig') }}
+
+{% endblock %}

@@ -1,0 +1,34 @@
+bootstrap_menu:
+  menus:
+    anonymousaccount:
+      items:
+         home:
+            label: 'Home'
+            route: 'home'
+         login:
+            label: 'Login'
+            route: 'app_login'
+         register:
+            label: 'Register'
+            route: 'app_register'
+    account:
+      items:
+         home:
+            label: 'Home'
+            route: 'home'
+         paquets:
+          label: 'Galerie'
+          route: 'app_paquet_index'
+          roles: [ 'ROLE_USER' ]
+         member:
+            label: 'Membres'
+            route: 'app_user_index'
+            roles: [ 'ROLE_USER' ]            
+         myAccount:
+            label: 'Mon compte'
+            route: 'app_my_account'
+            roles: [ 'ROLE_USER' ]
+         logout:
+            label: 'Logout'
+            route: 'app_logout'
+            roles: [ 'ROLE_USER' ]

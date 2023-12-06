@@ -1,0 +1,94 @@
+<?php
+
+namespace App\DataFixtures;
+
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
+use App\Entity\Paquet;
+use App\Entity\Carte;
+use App\Entity\User;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+class AppFixtures extends Fixture
+{
+    private UserPasswordHasherInterface $hasher;
+    
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
+    
+    public function load(ObjectManager $manager): void
+    {
+        // $product = new Product();
+        // $manager->persist($product);
+        $this->loadMembers($manager);
+        
+
+        $manager->flush();
+    }
+    private function loadMembers(ObjectManager $manager)
+    {
+        foreach ($this->getMemberData() as [$mail,$plainPassword,$role]){
+            $membre = new User();
+            $membre->setEmail($mail);
+            $password = $this->hasher->hashPassword($membre, $plainPassword);
+            $membre->setPassword($password);
+            $roles = array();
+            $roles[] = $role;
+            $membre->setRoles($roles);
+            $manager->persist($membre);
+            foreach ($this->getPaquetsData() as [$description,$nom_proprio]) {
+                if ($nom_proprio==$mail){
+                    $paquet = new Paquet();
+                    $paquet->setDescription($description);
+                    $paquet->setUser($membre);
+                    $manager->persist($paquet);
+                    $membre->addPaquet($paquet);
+                    $manager->persist($membre);
+                    foreach ($this->getCartesData() as [$nom,$DescriptionInventaire]) {
+                        if ($DescriptionInventaire==$description){
+                            $carte = new Carte();
+                            $carte->setNom($nom);
+                            $carte->setPaquet($paquet);
+                            $paquet->addItem($carte);
+                            $manager->persist($carte);
+                            $manager->persist($paquet);
+                        }
+                        $manager->flush();
+                    }
+                }
+            }
+        }
+        
+    }
+    private function getPaquetsData()
+    {
+        // todo = [title, completed];
+        yield ['Vieilles cartes moisies','chris@localhost',True];
+        yield ['Deck compliqué','chris@localhost',True];
+        yield ['Starter Deck','alice@localhost',True];
+        yield ['Deck volé à simon le drogué','simon@localhost',True];
+        
+    }
+    private function getCartesData()
+    {
+        // todo = [title, completed];
+        yield ['Le simon démoniaque','Vieilles cartes moisies'];
+        yield ['Alice au pays des bouteilles','Deck compliqué'];
+        yield ['Bob le bricobeurre','Deck volé à simon le drogué'];
+        yield ['Reine des Escalation','Starter Deck'];
+        
+    }
+    
+    private function getMemberData()
+    {
+        yield ['chris@localhost',
+            'chris',
+            'ROLE_USER'];
+        yield ['alice@localhost','alice','ROLE_USER'];
+        yield ['simon@localhost','simon','ROLE_ADMIN'];
+        
+    }
+    
+}

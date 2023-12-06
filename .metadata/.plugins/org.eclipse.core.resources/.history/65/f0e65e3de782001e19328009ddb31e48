@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
+use App\Entity\User;
+use App\Form\UserType;
+
+class MyAccountController extends AbstractController
+{
+    /**
+     * @var Security
+     */
+    private $security;
+    
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+    #[Route('/my_account', name: 'app_my_account', methods: ['GET', 'POST'])]
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user=$this->getUser();
+        if ($this->getUser() == null ) {
+            throw $this->createAccessDeniedException();
+        }
+        else {
+            if ( $this->getUser()!== $user && !in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+                throw $this->createAccessDeniedException();
+            }
+        }
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('my_account/index.html.twig', [
+            'controller_name' => 'MyAccountController',
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+}

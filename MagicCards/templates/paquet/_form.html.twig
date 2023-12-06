@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+    {% dump form.items %}
+    {{ form_errors(form) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.publique) }}
+            {{ form_row(form.description) }}
+            {#{ form_row(form.user) }#}
+        </div>
+        <div class="col">
+            {{ form_row(form.items) }}
+        </div>
+    </div>
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+

@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue{% endblock %}
+
+{% block body %}
+<main>
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #banner,
+        #features {
+            width: 70%;
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+<section id="banner">
+    <h1>
+       Galerie pour fan de cartes Magic
+    </h1>
+    <p>
+       Bienvenue sur ce site web ! <br>
+       Ce site est destiné à tous les fan de cartes magic pour mettre en ligne vos meilleurs paquets afin de gagner tous les tournois.<br>
+       Si vous jouez les cartes blanches vous serez cependant bannis à vie de ce site je préfère prévenir (grâce à ma superbe interface admin)
+    </p>
+</section>
+ 
+<section id="features" >
+    <div>
+
+      <!-- Titre -->
+<h2>Rejoignez la Communauté Magique !</h2>
+                <img src="./register.jpg" width="500" 
+     height="200"/>  
+       <p>
+
+<!-- Corps -->
+<p>Bienvenue sur notre communauté dédiée aux passionnés de cartes Magic ! 🌟</p>
+
+<p>Pour profiter pleinement de toutes les fonctionnalités exclusives de notre site, nous vous invitons à vous inscrire dès maintenant. En tant que membre, vous aurez accès à des fonctionnalités passionnantes, telles que la création et la consultation de vos paquets de cartes uniques, et bien plus encore !</p>
+
+<!-- Avantages de l'inscription -->
+<ul>
+    <li>✔️ <strong>Créez vos Paquets Uniques :</strong> Concevez et partagez vos stratégies de jeu en créant vos propres paquets de cartes Magic.</li>
+    <li>🔍 <strong>Explorez la Galerie des Cartes :</strong> Découvrez les créations époustouflantes des autres membres de la communauté et trouvez l'inspiration pour vos propres decks.</li>
+</ul>
+
+<!-- Appel à l'action -->
+<p>Rejoignez-nous dès aujourd'hui et plongez dans l'univers fascinant de Magic !</p>
+
+<!-- Lien d'inscription -->
+<p>[<a href="{{ path('app_register') }}">Inscrivez-vous maintenant !</a>]</p>
+
+<!-- Conclusion -->
+<p>Nous sommes impatients de vous accueillir dans notre communauté de joueurs passionnés.</p>
+
+<p>À bientôt sur le champ de bataille !</p>
+       </p>
+    </div>
+    <div>
+        <h3>Vos paquets !</h3>
+		<img src="./galerie_carte.png" width="1000" 
+     height="400"/>
+        <p><!-- Titre -->
+<h2>Dévoilez Votre Stratégie Unique !</h2>
+
+<!-- Corps -->
+<p>Cher(e) membre de notre communauté magique,</p>
+
+<p>Vous rêvez de mettre en œuvre des stratégies de jeu incomparables ? Votre espace personnel sur [Nom de Votre Site] vous ouvre les portes de l'innovation avec notre toute nouvelle fonctionnalité : les "Paquets Personnalisables" !</p>
+
+<!-- Points forts -->
+<ul>
+    <li>🌟 <strong>Créez votre propre univers de jeu :</strong> Dans l'onglet "Mon Compte", découvrez l'outil puissant qui vous permet de concevoir des paquets de cartes uniques, reflétant votre style de jeu et votre personnalité. Choisissez parmi une vaste collection de cartes Magic pour construire des decks qui vous ressemblent.</li>
+    <li>🚀 <strong>Partagez votre génie tactique :</strong> Une fois votre paquet perfectionné, partagez-le avec la communauté ! Les autres membres pourront admirer vos créations, apprendre de vos stratégies et peut-être même relever le défi en affrontant votre paquet.</li>
+    <li>🔥 <strong>Relevez des Défis Épiques :</strong> Lancez des défis à d'autres membres en mettant en jeu vos paquets personnalisés. Qui sait, vous pourriez devenir une légende dans notre communauté en remportant des tournois avec votre stratégie unique.</li>
+</ul>
+
+<!-- Conclusion -->
+<p>Explorez l'infini potentiel des "Paquets Personnalisables" dès maintenant depuis votre espace "Mon Compte". Développez votre réputation, inspirez les autres membres, et plongez dans une expérience de jeu magique comme jamais auparavant.</p>
+
+<p>Préparez-vous à vivre l'aventure, Maître des Cartes !</p>
+        </p>
+     </div>
+</section>
+</main>
+
+{% endblock %}

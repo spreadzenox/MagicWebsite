@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Your collections</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Cartes</th>
+                <th>Publique</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for paquet in app.user.paquets %}
+            <tr>
+                <td>{{ paquet.id }}</td>
+                <td>{{ paquet.description }}</td>
+                <td>{% for carte in paquet.items %}
+                {{ carte.Nom }} 
+                {% endfor %}</td>
+                <td>{% if paquet.publique %}
+                    	Oui
+                    {% else %}
+                    	Non
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue{% endblock %}
+
+{% block body %}
+<main>
+<section id="banner">
+    <h1>
+       Galerie pour fan de cartes magic
+    </h1>
+    <p>
+       Bienvenue sur ce site web ! 
+       Ce site est destiné à tous les fan de cartes magic pour mettre en ligne vos meilleurs paquets afin de gagner tous les tournois.
+       Si vous jouez les cartes blanches vous serez cependant bannis à vie de ce site je préfère prévenir (grâce à ma superbe interface admin)
+    </p>
+</section>
+ 
+<section id="features" >
+    <div>
+        <img src="./register.png" />
+        <h3>Enregistrez vous !</h3>  
+       <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies
+       </p>
+    </div>
+    <div>
+        <img src="./img/logo_js.png" />
+        <h3>Des</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies
+        </p>
+     </div>
+</section>
+</main>
+
+{% endblock %}
